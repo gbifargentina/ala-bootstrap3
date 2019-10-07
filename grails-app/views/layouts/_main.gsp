@@ -13,34 +13,36 @@
     <title><g:layoutTitle /></title>
     <g:if test="${!grailsApplication.config.headerAndFooter.excludeBootstrapCss}">
         <link href="${grailsApplication.config.headerAndFooter.baseURL}/css/bootstrap.min.css" rel="stylesheet" media="screen,print"/>
-        <link href="${grailsApplication.config.headerAndFooter.baseURL}/css/bootstrap-theme.min.css" rel="stylesheet" media="screen,print"/>
+    %{--
+    <link href="${grailsApplication.config.headerAndFooter.baseURL}/css/bootstrap-theme.min.css" rel="stylesheet" media="screen,print"/>
+    --}%
     </g:if>
     <g:if test="${!grailsApplication.config.headerAndFooter.excludeAlaStylesCss}">
-        <link href="${grailsApplication.config.headerAndFooter.baseURL}/css/ala-styles.css" rel="stylesheet"
+        <link href="${grailsApplication.config.headerAndFooter.baseURL}/css/poncho.css" rel="stylesheet"
               media="screen,print"/>
     </g:if>
 
     <g:set var="hfVersion" value="${grailsApplication.config.getProperty('headerAndFooter.version', Integer, 1)}" />
 
-    <g:if test="${hfVersion == 1}">
+    <g:if test="${hfVersion == 2}">
         <asset:stylesheet src="${pageProperty(name: 'meta.head-css') ?: "core"}"/>
         <asset:stylesheet src="${pageProperty(name: 'meta.head-screen-print-css') ?: "core-screen-print"}"
                           media="screen,print"/>
     </g:if>
-    <g:elseif test="${hfVersion == 2}">
+    <g:elseif test="${hfVersion == 1}">
         <link href="${grailsApplication.config.headerAndFooter.baseURL}/css/autocomplete.min.css" rel="stylesheet" media="screen,print"/>
-        <link href="${grailsApplication.config.headerAndFooter.baseURL}/css/autocomplete-extra.min.css" rel="stylesheet" media="screen,print"/>
+       %{-- <link href="${grailsApplication.config.headerAndFooter.baseURL}/css/autocomplete-extra.min.css" rel="stylesheet" media="screen,print"/>--}%
         <link href="${grailsApplication.config.headerAndFooter.baseURL}/css/font-awesome.min.css" rel="stylesheet" media="screen,print"/>
     </g:elseif>
 
 
     <plugin:isAvailable name="alaAdminPlugin"><asset:stylesheet src="ala-admin-asset.css" /></plugin:isAvailable>
 
-    <g:if test="${hfVersion == 1}">
+    <g:if test="${hfVersion == 2}">
         <asset:javascript src="${pageProperty(name: 'meta.head-js') ?: 'head'}"/>
         <asset:javascript src="${pageProperty(name: 'meta.deferred-js') ?: 'jquery-extensions'}" />
     </g:if>
-    <g:elseif test="${hfVersion == 2}">
+    <g:elseif test="${hfVersion == 1}">
         <script type="text/javascript"
                 src="${grailsApplication.config.headerAndFooter.baseURL}/js/jquery.min.js"></script>
         <script type="text/javascript"
@@ -62,39 +64,46 @@
 
 </head>
 <body class="${pageProperty(name:'body.class')}" id="${pageProperty(name:'body.id')}" onload="${pageProperty(name:'body.onload')}">
+
 <g:set var="fluidLayout" value="${pageProperty(name:'meta.fluidLayout')?:grailsApplication.config.getProperty('skin.fluidLayout', Boolean, false)}"/>
 <!-- Header -->
 <hf:banner logoutUrl="${g.createLink(controller: "logout", action: "logout", absolute: true)}"
            ignoreCookie="${grailsApplication.config.ignoreCookie}" fluidLayout="${grailsApplication.config.fluidLayout}"/>
 <!-- End header -->
-<g:if test="${!pageProperty(name:'meta.hideBreadcrumb')}">
-    <!-- Breadcrumb -->
-    <g:set var="breadcrumbParent" value="${pageProperty(name:'meta.breadcrumbParent')}"/>
-    <g:set var="breadcrumbs" value="${pageProperty(name:'meta.breadcrumbs')}"/>
-    <g:set var="breadcrumb" value="${pageProperty(name:'meta.breadcrumb')?:pageProperty(name:'title')}"/>
-    <section id="breadcrumb">
-        <div class="${fluidLayout ? 'container-fluid' : 'container'}">
-            <div class="row">
-                <nav aria-label="Breadcrumb" role="navigation">
-                    <ol class="breadcrumb-list">
-                        <li><a href="${grailsApplication.config.skin?.homeUrl?:'https://www.ala.org.au'}">Home</a></li>
-                        <g:if test="${breadcrumbParent}">
-                            <g:set value="${breadcrumbParent.tokenize(',')}" var="parentArray"/>
-                            <li><a href="${parentArray[0]}">${parentArray[1]}</a></li>
-                        </g:if>
-                        <g:if test="${breadcrumbs}">
-                            <g:each in="${breadcrumbs.tokenize('\\')}" var="item">
-                                <li><a href="${item.split(',', 2)[0]}">${item.split(',', 2)[1]}</a></li>
-                            </g:each>
-                        </g:if>
-                        <li class="active">${breadcrumb}</li>
-                    </ol>
-                </nav>
-            </div>
+<!-- Breadcrumb -->
+<header>
+    <div class="panel-pane pane-imagen-destacada">
+        <div class="pane-content">
+            <section class="jumbotron" style="background-image: url('${grailsApplication.config.breadcrumb.image}');">
+                <div class="jumbotron_bar">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ol class="breadcrumb pull-left">
+                                    <g:each in="${grails.converters.JSON.parse(grailsApplication.config.breadcrumb.path)}" var="path">
+                                        <li><a href="${path.url}">${raw(path.display)}</a></li>
+                                    </g:each>
+                                    <li class="active"><span >${raw(grailsApplication.config.breadcrumb.activoDisplay)}</span></li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="jumbotron_body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-8 col-md-offset-2 text-center">
+                                <h1>${raw(grailsApplication.config.title)}</h1>
+                                <p>${raw(grailsApplication.config.description)}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </section>
-    <!-- End Breadcrumb -->
-</g:if>
+    </div>
+</header>
+<!-- End Breadcrumb -->
 <!-- Optional banner message (requires ala-admin-plugin) -->
 <plugin:isAvailable name="alaAdminPlugin">
 	<div class="ala-admin-message">
