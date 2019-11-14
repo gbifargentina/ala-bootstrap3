@@ -18,8 +18,7 @@
                        [href: "${grailsApplication.config.headerAndFooter.baseURL}/css/font-awesome.min.css", media: 'screen,print'],
                        [href: "${grailsApplication.config.headerAndFooter.baseURL}/css/autocomplete.min.css", media: 'screen,print'],
                        [href: "${grailsApplication.config.headerAndFooter.baseURL}/css/autocomplete-extra.min.css", media: 'screen,print'],
-                       [href: "${grailsApplication.config.headerAndFooter.baseURL}/css/ala-styles.min.css", media: 'screen,print'],
-                       [href: "${grailsApplication.config.headerAndFooter.baseURL}/css/ala-theme.min.css", media: 'screen,print']], requireModule: 'ala']}" />
+                       [href: "${grailsApplication.config.headerAndFooter.baseURL}/css/poncho.min.css", media: 'screen,print']], requireModule: 'ala']}" />
     <g:layoutHead />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -36,7 +35,38 @@
            ignoreCookie="${grailsApplication.config.ignoreCookie}" fluidLayout="${grailsApplication.config.fluidLayout}"/>
 <!-- End header -->
 <!-- Breadcrumb -->
-<section id="breadcrumb">
+<header>
+    <div class="panel-pane pane-imagen-destacada">
+        <div class="pane-content">
+            <section class="jumbotron" style="background-image: url('${grailsApplication.config.breadcrumb.image}');">
+                <div class="jumbotron_bar">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ol class="breadcrumb pull-left">
+                                    <g:each in="${grails.converters.JSON.parse(grailsApplication.config.breadcrumb.path)}" var="path">
+                                        <li><a href="${path.url}">${raw(path.display)}</a></li>
+                                    </g:each>
+                                    <li class="active"><span >${raw(grailsApplication.config.breadcrumb.activoDisplay)}</span></li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="jumbotron_body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-8 col-md-offset-2 text-center">
+                                <h1>${raw(pageProperty(name:'title').split('\\|')[0])}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</header>
+%{--<section id="breadcrumb">
     <div class="${fluidLayout ? 'container-fluid' : 'container'}">
         <div class="row">
             <nav aria-label="Breadcrumb" role="navigation">
@@ -51,7 +81,7 @@
             </nav>
         </div>
     </div>
-</section>
+</section>--}%
 <!-- End Breadcrumb -->
 <!-- Container -->
 <div class="${fluidLayout ? 'container-fluid' : 'container'}" id="main">

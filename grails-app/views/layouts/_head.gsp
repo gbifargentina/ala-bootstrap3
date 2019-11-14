@@ -5,6 +5,7 @@
         </g:each>
     </g:if>
     <asset:javascript src="${grailsApplication.config.headerAndFooter.baseURL}/js/jquery.min.js" />
+    <asset:javascript src="${grailsApplication.config.headerAndFooter.baseURL}/js/jquery-migration.min.js" />
     <asset:javascript src="${grailsApplication.config.headerAndFooter.baseURL}/js/autocomplete.min.js" />
 </plugin:isNotAvailable>
 <plugin:isAvailable name="resources">

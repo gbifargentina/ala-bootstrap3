@@ -20,9 +20,12 @@ modules = {
     ala {
         dependsOn('bootstrap', 'core')
         resource url: grailsApplication.config.headerAndFooter.baseURL + '/css/bootstrap-theme.min.css', attrs:[media:'screen, print'], disposition: 'head'
-        resource url: grailsApplication.config.headerAndFooter.baseURL + '/css/autocomplete-extra.min.css', attrs:[media:'screen, print'], disposition: 'head'
-        resource url: grailsApplication.config.headerAndFooter.baseURL + '/css/ala-styles.css', attrs:[media:'screen, print'], disposition: 'head'
-        resource url: grailsApplication.config.headerAndFooter.baseURL + '/css/ala-theme.css', attrs:[media:'screen, print'], disposition: 'head'
+        //resource url: grailsApplication.config.headerAndFooter.baseURL + '/css/autocomplete-extra.min.css', attrs:[media:'screen, print'], disposition: 'head'
+        resource url: grailsApplication.config.headerAndFooter.baseURL + '/css/autocomplete.min.css', attrs:[media:'screen, print'], disposition: 'head'
+        resource url: grailsApplication.config.headerAndFooter.baseURL + '/css/font-awesome.min.css', attrs:[media:'screen, print'], disposition: 'head'
+        resource url: grailsApplication.config.headerAndFooter.baseURL + '/css/roboto-fontface.css', attrs:[media:'screen, print'], disposition: 'head'
+        resource url: grailsApplication.config.headerAndFooter.baseURL + '/css/icono-arg.css', attrs:[media:'screen, print'], disposition: 'head'
+        resource url: grailsApplication.config.headerAndFooter.baseURL + '/css/poncho.css', attrs:[media:'screen, print'], disposition: 'head'
     }
 
     core {
@@ -37,7 +40,7 @@ modules = {
             resource url:[dir:'js', file:'autocomplete.min.js'], disposition: 'head'
         }
 
-        resource url: grailsApplication.config.headerAndFooter.baseURL + '/css/font-awesome.min.css', attrs:[media:'screen, print'], disposition: 'head'
+        //resource url: grailsApplication.config.headerAndFooter.baseURL + '/css/font-awesome.min.css', attrs:[media:'screen, print'], disposition: 'head'
         resource url: grailsApplication.config.headerAndFooter.baseURL + '/js/application.js'
     }
 }
